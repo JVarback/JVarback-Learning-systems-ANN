@@ -24,14 +24,30 @@ input_size = 19
 hidden_size = 64
 output_size = 1
 
+
+
 def init_params(input_size, hidden_size, output_size):
-    hidden_wights = np.random.randn(input_size, hidden_size)
+    hidden_weights = np.random.randn(input_size, hidden_size)
     output_weights = np.random.randn(hidden_size, output_size)
 
     hidden_biases = np.zeros((1, hidden_size))
     output_biases = np.zeros((1, output_size))
 
-    return hidden_wights, output_weights, hidden_biases, output_biases
+    return hidden_weights, output_weights, hidden_biases, output_biases
+
+def fowrad_prop(x_train, hidden_weights, output_weights, hidden_biases, output_biases): # Ska man använda sig av biases här????
+    input_to_hidden = np.dot(x_train, hidden_weights)
+    hidden_activation = sigmoid(input_to_hidden)
+
+    hidden_to_output = np.dot(hidden_activation, output_weights)
+    output_activation = sigmoid(hidden_to_output)
+
+    return hidden_activation, output_activation
+
+
+def sigmoid(x):
+    s = 1/(1+math**(-x))
+    return s
 
 class ANN():
     def __init__(self, size_of_input, size_of_output, size_of_hidden_layers, neurons = None, weights = None, biases = None):
@@ -80,4 +96,6 @@ class ANN():
     
 
 
+hidden_weights, output_weights, hidden_biases, output_biases = init_params(input_size, hidden_size, output_size)
 
+print(output_biases)
