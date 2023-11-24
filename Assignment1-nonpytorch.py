@@ -21,8 +21,17 @@ eval_df = non_training_selected_df.drop(test_df.index).sample(n=eval_df_portion,
 learning_rate = 0.1
 
 input_size = 19
-hidden_layers = 2
+hidden_size = 64
 output_size = 1
+
+def init_params(input_size, hidden_size, output_size):
+    hidden_wights = np.random.randn(input_size, hidden_size)
+    output_weights = np.random.randn(hidden_size, output_size)
+
+    hidden_biases = np.zeros((1, hidden_size))
+    output_biases = np.zeros((1, output_size))
+
+    return hidden_wights, output_weights, hidden_biases, output_biases
 
 class ANN():
     def __init__(self, size_of_input, size_of_output, size_of_hidden_layers, neurons = None, weights = None, biases = None):
