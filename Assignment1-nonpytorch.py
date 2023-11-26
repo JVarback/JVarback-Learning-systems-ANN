@@ -58,7 +58,7 @@ def forward_prop(x_train, hidden_weights, output_weights, hidden_biases, output_
 
 def backpropagation(X_train, y_train, hidden_activation, output_activation, output_weights):
     data_info_all_examples = len(X_train)  # Number of training examples
-    d_comb_output = output_activation - y_train.reshape(-1, 1)  # Reshape y_train to match output_activation
+    d_comb_output = output_activation - y_train.reshape(-1, 1)  
     d_weight_output = np.dot(hidden_activation.T, d_comb_output) / data_info_all_examples
     d_bias_output = np.sum(d_comb_output, axis=0, keepdims=True) / data_info_all_examples
 
@@ -81,7 +81,7 @@ hidden_size = 2048
 output_size = 1
 learning_rate = 0.5
 
-# Initialize network parameters
+
 hidden_weights, output_weights, hidden_biases, output_biases = init_params(input_size, hidden_size, output_size)
 
 # Lists to store losses
@@ -96,23 +96,23 @@ for epoch in range(num_epochs):
     epoch_loss = 0
 
     for X_batch, y_batch in train_loader:
-        X_batch = X_batch.numpy()  # Convert to NumPy array
-        y_batch = y_batch.numpy()  # Convert to NumPy array
+        X_batch = X_batch.numpy()  
+        y_batch = y_batch.numpy()  
 
-        # Forward propagation
+    
         hidden_activation, output_activation = forward_prop(X_batch, hidden_weights, output_weights, hidden_biases, output_biases)
 
-        # Convert output_activation to NumPy array for loss computation
+        
         output_activation_np = output_activation
 
-        # Compute loss (mean squared error)
+        
         loss = np.mean((y_batch - output_activation_np) ** 2)
         epoch_loss += loss
 
-        # Backward propagation
+        
         d_weight_hidden, d_bias_hidden, d_weight_output, d_bias_output = backpropagation(X_batch, y_batch, hidden_activation, output_activation_np, output_weights)
 
-        # Update parameters
+        
         hidden_weights -= learning_rate * d_weight_hidden
         hidden_biases -= learning_rate * d_bias_hidden
         output_weights -= learning_rate * d_weight_output
@@ -120,7 +120,7 @@ for epoch in range(num_epochs):
 
     train_losses.append(epoch_loss / len(train_loader))
 
-    # Validation loss
+    
     val_loss = 0
     for x_val, y_val in val_loader:
         x_val, y_val = x_val.numpy(), y_val.numpy()
@@ -128,7 +128,7 @@ for epoch in range(num_epochs):
         val_loss += np.mean((y_val - output_val) ** 2)
     val_losses.append(val_loss / len(val_loader))
 
-    # Test loss and accuracy
+    
     test_loss = 0
     correct = 0
     total = 0
@@ -137,7 +137,7 @@ for epoch in range(num_epochs):
         _, output_test = forward_prop(x_test, hidden_weights, output_weights, hidden_biases, output_biases)
         test_loss += np.mean((y_test - output_test) ** 2)
         
-        predicted = output_test > 0.5  # Thresholding at 0.5 for binary classification
+        predicted = output_test > 0.5  
         correct += np.sum(predicted.flatten() == y_test)
         total += y_test.shape[0]
 
